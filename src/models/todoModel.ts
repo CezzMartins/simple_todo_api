@@ -5,7 +5,7 @@ export interface TodoInstance extends Model {
     id: number;
     title: string;
     description: string,
-    completed: boolean;
+    completed: number;
 }
 
 export const TodoModel = sequelize.define<TodoInstance>('TodoModel', {
@@ -21,7 +21,7 @@ export const TodoModel = sequelize.define<TodoInstance>('TodoModel', {
         type: DataTypes.TEXT,
     },
     completed: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.TINYINT,
         defaultValue: false,
     }
 }, {
