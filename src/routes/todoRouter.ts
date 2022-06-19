@@ -1,10 +1,17 @@
 import { Request, Response, Router } from 'express';
-import * as todoControllers from '../controllers/TodosControllers';
+import * as todoController from '../controllers/TodosController';
 
 
 const router = Router();
 
-router.get('/', todoControllers.allTodos);
+
+router.get('/todo', todoController.all);
+
+router.post('/todo', todoController.add);
+
+router.put('/todo/:id', todoController.update);
+
+router.delete('/todo/:id', todoController.remove);
 
 
 
