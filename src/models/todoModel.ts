@@ -1,8 +1,30 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../database/mysql';
 
-interface TodoItem extends Model {
+export interface TodoInstance extends Model {
     id: number;
-    task: string;
+    title: string;
+    description: string,
     completed: boolean;
 }
+
+export const TodoModel = sequelize.define<TodoInstance>('TodoModel', {
+    id: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+    },
+    title: {
+        type: DataTypes.STRING,
+    },
+    description: {
+        type: DataTypes.TEXT,
+    },
+    completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
+}, {
+    tableName: 'todos',
+    timestamps: false
+})
