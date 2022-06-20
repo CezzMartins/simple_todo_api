@@ -51,6 +51,11 @@ export const update = async (request: Request, response: Response) => {
     response.json({ error: "Item não encontrado."});
 }
 
-export const remove = (request: Request, response: Response) => {
-    response.json({result: "salve"});
+export const remove = async (request: Request, response: Response) => {
+    const id = request.params.id;
+    const todo = await TodoModel.findByPk(id);
+
+    if(todo) todo.destroy();
+
+    response.json();
 }
