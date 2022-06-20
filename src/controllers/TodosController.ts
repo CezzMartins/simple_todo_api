@@ -44,6 +44,7 @@ export const update = async (request: Request, response: Response) => {
                     break;
            }
         }
+        
         await todo.save();
         response.json({ item: todo })
     }
