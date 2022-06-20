@@ -22,8 +22,33 @@ export const add = async (request: Request, response: Response) => {
     response.json({ errror: "Dados não inivados corretamente. "});
 }
 
-export const update = (request: Request, response: Response) => {
-    response.json({result: "salve"});
+export const update = async (request: Request, response: Response) => {
+    const id: string = request.params.id;
+    const todo = await TodoModel.findByPk(id);
+
+    if(todo){
+        if(request.body.title) todo.title = request.body.title;
+
+        if(request.body.title) todo.description = request.body.description;
+
+        if(request.body.completed) {            
+           switch(request.body.completed.toLowerCase()) {
+                case 'true':
+                case '1':
+                    todo.completed = true;
+                    break;
+
+                case 'false':
+                case '0':
+                    todo.completed = false;
+                    break;
+           }
+        }
+        await todo.save();
+        response.json({ item: todo })
+    }
+
+    response.json({ error: "Item não encontrado."});
 }
 
 export const remove = (request: Request, response: Response) => {
