@@ -60,3 +60,7 @@ export const remove = async (request: Request, response: Response) => {
 
     response.json();
 }
+
+export const uploadImage = async (request: Request, response: Response) => {
+    response.json({ message: "Uplod completed!" });
+}
