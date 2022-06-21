@@ -10,11 +10,16 @@ const storageConfig = multer.diskStorage({
     filename: (request, file, cb) => {
         const radomName = Math.floor(Math.random() * 9999999)
         cb(null, `${radomName+Date.now()}.jpg`);
-    }
+    },
+    
 })
 
 const upload =  multer({
-    storage: storageConfig
+    storage: storageConfig,
+    fileFilter: (request, file, cb) => {
+        const allowed: string[] = ['image/png','image/jpg', 'image/jpeg'];
+        cb(null, allowed.includes( file.mimetype ));
+    }
 })
 
 const router = Router();
