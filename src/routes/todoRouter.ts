@@ -35,4 +35,6 @@ router.delete('/todo/:id', todoController.remove);
 
 router.post('/upload', upload.single('avatar'), todoController.uploadImage);
 
+
+
 export default router;

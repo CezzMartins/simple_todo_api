@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { TodoModel } from '../models/todoModel';
-
+import sharp from 'sharp';
+import { unlink } from 'fs/promises';
 
 
 export const all = async (request: Request, response: Response) => {
@@ -62,5 +63,21 @@ export const remove = async (request: Request, response: Response) => {
 }
 
 export const uploadImage = async (request: Request, response: Response) => {
+    
+    if(request.file){
+        const fileName: string = request.file.filename;
+        await sharp(request.file.path)
+            .resize(80, 80, { fit: sharp.fit.cover, position: 'center'})
+            .toFormat('jpeg')
+            .toFile(`./public/media/${fileName}.jpg`);
+            
+        await unlink(request.file.path);
+        response.json({ image: `${fileName}.jpg Was saved!`});
+
+    }else {
+        response.status(400);
+        response.json({ error: 'File Invalid! '});
+    }
+
     response.json({ message: "Uplod completed!" });
 }
